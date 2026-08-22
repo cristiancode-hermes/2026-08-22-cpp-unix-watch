@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>unix-watch</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #1e1e2e; font-family: 'Fira Code', monospace; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 40px 20px; }
+  .terminal {
+    background: #181825;
+    border-radius: 12px;
+    padding: 24px 32px;
+    color: #cdd6f4;
+    font-size: 13.5px;
+    line-height: 1.55;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    max-width: 980px;
+    width: 100%;
+  }
+  .cyan { color: #89dceb; }
+  .green { color: #a6e3a1; }
+  .yellow { color: #f9e2af; }
+  .red { color: #f38ba8; }
+  .dim { color: #6c7086; }
+  .magenta { color: #cba6f7; }
+  .blue { color: #89b4fa; }
+  .bold { font-weight: 600; }
+  .header-box { border: 2px solid #89dceb; border-radius: 8px; padding: 12px 20px; margin-bottom: 18px; }
+  .header-box .title { color: #89dceb; font-size: 15px; font-weight: 600; }
+  .header-box .sub { color: #6c7086; font-size: 12px; margin-top: 4px; }
+  .section-title { color: #cdd6f4; font-weight: 600; margin-top: 14px; margin-bottom: 8px; }
+  .agg-row { display: flex; gap: 18px; margin-bottom: 6px; flex-wrap: wrap; }
+  .agg-label { color: #6c7086; font-size: 11px; }
+  .agg-value { color: #cdd6f4; font-size: 15px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 12.5px; }
+  th { color: #6c7086; text-align: left; font-weight: 400; padding: 4px 6px; border-bottom: 1px solid #45475a; font-size: 11px; }
+  td { padding: 4px 6px; white-space: nowrap; }
+  .notes { margin-top: 14px; color: #6c7086; font-size: 11px; line-height: 1.5; }
+  .prompt { margin-top: 16px; color: #a6e3a1; font-size: 12px; }
+  .tag { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #313244; color: #a6e3a1; margin-left: 4px; }
+  .tag-abs { color: #cba6f7; }
+  .tag-listen { color: #89b4fa; }
+  .tag-unnamed { color: #6c7086; }
+</style>
+</head>
+<body>
+<div class="terminal">
+  <div class="header-box">
+    <div class="title">+================================================+</div>
+    <div class="title">|     Linux AF_UNIX Socket Table Monitor        |</div>
+    <div class="title">+================================================+</div>
+    <div class="sub">Source: /proc/net/unix &nbsp;·&nbsp; Snapshot: 2026-08-22 05:00:12 &nbsp;·&nbsp; --demo</div>
+  </div>
+
+  <div class="section-title">-- Aggregate --</div>
+  <div class="agg-row">
+    <div>
+      <div class="agg-label">Sockets</div>
+      <div class="agg-value cyan">10</div>
+    </div>
+    <div>
+      <div class="agg-label">STREAM</div>
+      <div class="agg-value green">7</div>
+    </div>
+    <div>
+      <div class="agg-label">DGRAM</div>
+      <div class="agg-value yellow">2</div>
+    </div>
+    <div>
+      <div class="agg-label">SEQPACKET</div>
+      <div class="agg-value magenta">1</div>
+    </div>
+    <div>
+      <div class="agg-label">Listening</div>
+      <div class="agg-value blue">4</div>
+    </div>
+    <div>
+      <div class="agg-label">Connected</div>
+      <div class="agg-value green">2</div>
+    </div>
+    <div>
+      <div class="agg-label">Abstract</div>
+      <div class="agg-value magenta">3</div>
+    </div>
+    <div>
+      <div class="agg-label">Pathname</div>
+      <div class="agg-value cyan">5</div>
+    </div>
+    <div>
+      <div class="agg-label">Unnamed</div>
+      <div class="agg-value dim">2</div>
+    </div>
+  </div>
+
+  <div class="section-title">-- Sockets (10) --</div>
+  <table>
+    <tr>
+      <th>Type</th><th>State</th><th>Flg</th><th>Refs</th><th>Inode</th><th>Path</th>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="blue">UNCONN</td>
+      <td class="blue">L</td>
+      <td>2</td>
+      <td>12345</td>
+      <td class="magenta">@/tmp/dbus-abc <span class="tag tag-abs">abstract</span><span class="tag tag-listen">listen</span></td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="blue">UNCONN</td>
+      <td class="blue">L</td>
+      <td>2</td>
+      <td>12353</td>
+      <td class="magenta">@/tmp/.X11-unix/X0 <span class="tag tag-abs">abstract</span></td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="blue">UNCONN</td>
+      <td class="blue">L</td>
+      <td>3</td>
+      <td>12354</td>
+      <td>/run/containerd/containerd.sock <span class="tag tag-listen">listen</span></td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="green">CONN</td>
+      <td class="dim">-</td>
+      <td>3</td>
+      <td>12346</td>
+      <td>/run/user/1000/bus</td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="yellow">CONNING</td>
+      <td class="dim">-</td>
+      <td>2</td>
+      <td>12350</td>
+      <td>/tmp/mysql.sock</td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="green">CONN</td>
+      <td class="dim">-</td>
+      <td>3</td>
+      <td>12347</td>
+      <td class="dim">(unnamed) <span class="tag tag-unnamed">unnamed</span></td>
+    </tr>
+    <tr>
+      <td class="yellow">dgram</td>
+      <td class="dim">UNCONN</td>
+      <td class="dim">-</td>
+      <td>2</td>
+      <td>12348</td>
+      <td class="magenta">@/org/kernel/udev/monitor <span class="tag tag-abs">abstract</span></td>
+    </tr>
+    <tr>
+      <td class="yellow">dgram</td>
+      <td class="dim">UNCONN</td>
+      <td class="dim">-</td>
+      <td>2</td>
+      <td>12352</td>
+      <td>/dev/log</td>
+    </tr>
+    <tr>
+      <td class="magenta">seqpacket</td>
+      <td class="blue">UNCONN</td>
+      <td class="blue">L</td>
+      <td>2</td>
+      <td>12349</td>
+      <td>/run/systemd/journal/stdout</td>
+    </tr>
+    <tr>
+      <td class="cyan">stream</td>
+      <td class="red">DISCONN</td>
+      <td class="dim">-</td>
+      <td>1</td>
+      <td>12351</td>
+      <td class="dim">(unnamed)</td>
+    </tr>
+  </table>
+
+  <div class="notes">
+    Reads /proc/net/unix · type STREAM/DGRAM/SEQPACKET · flag L=SO_ACCEPTCON · abstract @name<br>
+    Watch deltas · JSON sockets · C++23 zero deps
+  </div>
+  <div class="prompt">$ ./unix-watch --demo<span class="dim"> ▍</span></div>
+</div>
+</body>
+</html>
